@@ -1,0 +1,19 @@
+{
+	"Cities": [{
+		"id": 524901,
+		"name": "Moscow",
+		"imageName": "moscow"
+	}, {
+		"id": 2643743,
+		"name": "London",
+		"imageName": "london"
+	}, {
+		"id": 5128581,
+		"name": "New York City",
+		"imageName": "newyork"
+	}, {
+		"id": 1733046,
+		"name": "Kuala Lumpur",
+		"imageName": "kualalumpur"
+	}]
+}

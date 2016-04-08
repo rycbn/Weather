@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9TY-pf-S1B">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Weather Table View Controller-->
+        <scene sceneID="41Y-wR-Jtb">
+            <objects>
+                <tableViewController id="Ez7-AJ-d1f" customClass="WeatherTableViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="VCF-Cd-e4O">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="IPB-x7-jFa">
+                            <rect key="frame" x="0.0" y="64" width="600" height="250"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="world" translatesAutoresizingMaskIntoConstraints="NO" id="iDV-uc-9ua">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="iDV-uc-9ua" secondAttribute="bottom" id="D9e-my-dhz"/>
+                                <constraint firstItem="iDV-uc-9ua" firstAttribute="leading" secondItem="IPB-x7-jFa" secondAttribute="leading" id="jAB-31-3G8"/>
+                                <constraint firstAttribute="trailing" secondItem="iDV-uc-9ua" secondAttribute="trailing" id="t1f-mW-pLw"/>
+                                <constraint firstItem="iDV-uc-9ua" firstAttribute="top" secondItem="IPB-x7-jFa" secondAttribute="top" id="x91-fm-KBx"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="HwI-Qc-3Pd">
+                                <rect key="frame" x="0.0" y="342" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HwI-Qc-3Pd" id="6M3-3l-MaJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ez7-AJ-d1f" id="5XL-OT-ZxW"/>
+                            <outlet property="delegate" destination="Ez7-AJ-d1f" id="TGJ-Uh-imi"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="0bv-bs-wSH"/>
+                    <connections>
+                        <outlet property="cityImageView" destination="iDV-uc-9ua" id="Hoi-Id-Llk"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zUI-bZ-UOA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3392" y="139"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Znj-pI-d3F">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9TY-pf-S1B" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Gb3-zw-ed6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Ez7-AJ-d1f" kind="relationship" relationship="rootViewController" id="gZZ-rf-Skz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bN9-R9-cRo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2580" y="139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="world" width="840" height="556"/>
+    </resources>
+</document>
