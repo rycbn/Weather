@@ -17,7 +17,7 @@ class Weather: NSObject {
     var delegate: WeatherDelegate!
     
     func getWeather(cityId cityId: NSNumber) {
-        TaskConfig.sharedInstance().getWeatherData(cityId) { (results, error) in
+        TaskConfig().getWeatherData(cityId) { (results, error) in
             if results == nil {
                 self.delegate.ApiError()
             }

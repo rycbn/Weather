@@ -217,9 +217,8 @@ extension WeatherTableViewController {
         backgroundView.removeFromSuperview()
     }
 }
-// MARK:- UITableViewDataSource, UITableViewDelegate
+// MARK:- UITableViewDataSource
 extension WeatherTableViewController {
-    // MARK: - Table view data source
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -228,19 +227,13 @@ extension WeatherTableViewController {
         count = isNetworkOrCellularCoverageReachable() ? tableData.count : 1
         return count
     }
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    override func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: Identifier.TableCell)
         cell.imageView!.image = UIImage(named: ImageName.Cloud)
         if isNetworkOrCellularCoverageReachable() {
             let list = tableData[indexPath.row] as! List
             if let imageUrl = list.imageUrl {
-                TaskConfig.sharedInstance().taskForGETImage(imageUrl, completionHandler: { (imageData, error) in
+                TaskConfig().taskForGETImage(imageUrl, completionHandler: { (imageData, error) in
                     if let image = UIImage(data: imageData!) {
                         dispatch_async(dispatch_get_main_queue(), { 
                             cell.imageView!.image = image
@@ -269,22 +262,38 @@ extension WeatherTableViewController {
         return cell
     }
 }
+// MARK:- UITableViewDelegate
+extension WeatherTableViewController {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    override func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+}
 // MARK:- UIScrollViewDelegate
 extension WeatherTableViewController {
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         updateHeaderView()
     }
 }
-// MARK:- UIPickerViewDataSource, UIPickerViewDelegate
-extension WeatherTableViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+// MARK:- UIPickerViewDataSource
+extension WeatherTableViewController: UIPickerViewDataSource {
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerData.count
     }
+}
+// MARK:- UIPickerViewDelegate
+extension WeatherTableViewController: UIPickerViewDelegate {
     func pickerView(pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         return Width.PickerView
+    }
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        city = pickerData[row]
+        return city.name!
     }
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         city = pickerData[row]
@@ -296,12 +305,8 @@ extension WeatherTableViewController: UIPickerViewDataSource, UIPickerViewDelega
         NSUserDefaults.standardUserDefaults().setValue(cityIdSelected, forKey: UserDefaults.CityId)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        city = pickerData[row]
-        return city.name!
-    }
 }
-// MARK:- 
+// MARK:- WeatherDelegate
 extension WeatherTableViewController: WeatherDelegate {
     func weatherData(data: [List]) {
         tableData = data
