@@ -12,3 +12,10 @@ func geography() -> UIImage {
     let image = UIImage(named: "icon_geography")!.imageWithRenderingMode(.AlwaysTemplate)
     return image
 }
+func imageTransition() -> CATransition {
+    let transition = CATransition()
+    transition.duration = 1.0
+    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+    transition.type = kCATransitionFade
+    return transition
+}

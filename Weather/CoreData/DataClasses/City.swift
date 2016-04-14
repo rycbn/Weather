@@ -14,7 +14,7 @@ class City: NSManagedObject {
     class func count() -> Int {
         var error: NSError? = nil
         let fetchRequest = NSFetchRequest(entityName: EntityName.City)
-        let count = appDelegate().coreDataStack.context.countForFetchRequest(fetchRequest, error: &error)
+        let count = objContext().countForFetchRequest(fetchRequest, error: &error)
         return count
     }
     class func getData(id: Int) -> City {
@@ -22,7 +22,7 @@ class City: NSManagedObject {
         let fetchRequest = NSFetchRequest(entityName: EntityName.City)
         fetchRequest.predicate = NSPredicate(format: "id = %li", id)
         do {
-            let results = try appDelegate().coreDataStack.context.executeFetchRequest(fetchRequest) as! [City]
+            let results = try objContext().executeFetchRequest(fetchRequest) as! [City]
             data = results.first!
         }
         catch let error as NSError {
@@ -36,7 +36,7 @@ class City: NSManagedObject {
         let fetchRequest = NSFetchRequest(entityName: EntityName.City)
         fetchRequest.sortDescriptors = [sort]
         do {
-            let results = try appDelegate().coreDataStack.context.executeFetchRequest(fetchRequest) as! [City]
+            let results = try objContext().executeFetchRequest(fetchRequest) as! [City]
             data = results.first!
         }
         catch let error as NSError {
@@ -46,10 +46,10 @@ class City: NSManagedObject {
     }
     // MARK:- INSERT
     class func insert(data: [String: AnyObject]) {
-        let entity = NSEntityDescription.entityForName(EntityName.City, inManagedObjectContext: appDelegate().coreDataStack.context)
+        let entity = NSEntityDescription.entityForName(EntityName.City, inManagedObjectContext: objContext())
         let cities = data[JsonResponseKeys.Cities] as! [AnyObject]
         for city in cities {
-            let item = City(entity: entity!, insertIntoManagedObjectContext: appDelegate().coreDataStack.context)
+            let item = City(entity: entity!, insertIntoManagedObjectContext: objContext())
             item.id = city[JsonResponseKeys.Id] as? NSNumber
             item.name = city[JsonResponseKeys.Name] as? String
             item.imageName = city[JsonResponseKeys.ImageName] as? String
@@ -61,6 +61,6 @@ class City: NSManagedObject {
                 }
             }
         }
-        appDelegate().coreDataStack.saveContext()
+        objSaveContext()
     }
 }

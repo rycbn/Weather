@@ -18,4 +18,6 @@ struct Translation {
     static let DataNotAvailable = "Data not available"
     static let ApiErrorTitle = "API Error"
     static let ApiErrorMessage = "API connection issue, please try again"
+    static let Sorry = "Sorry"
+    static let FetchDataErrorMessage = "Could not fetch data, please try again."
 }

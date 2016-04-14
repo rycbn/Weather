@@ -77,10 +77,11 @@ extension WeatherTableViewController {
                 }
             })
             do {
-                try appDelegate().coreDataStack.context.executeRequest(asyncFetchRequestExchange)
+                try objContext().executeRequest(asyncFetchRequestExchange)
             }
-            catch let error as NSError {
-                print("Could not fetch \(error), \(error.userInfo)")
+            catch {
+                displayAlertWithTitle(Translation.Sorry, message: Translation.FetchDataErrorMessage, viewController: self)
+                //print("Could not fetch \(error), \(error.userInfo)")
             }
         }
         else {
@@ -198,14 +199,8 @@ extension WeatherTableViewController {
                 NSUserDefaults.standardUserDefaults().synchronize()
                 
                 weather.getWeather(cityId: cityIdSelected)
-                
                 cityImageView.image = UIImage(named: cityImageSelected)
-                let transition = CATransition()
-                transition.duration = 1.5
-                transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                transition.type = kCATransitionFade
-                transition.delegate = self
-                cityImageView!.layer.addAnimation(transition, forKey: nil)
+                cityImageView!.layer.addAnimation(imageTransition(), forKey: nil)
                 title = cityNameSelected
             }
         }
@@ -237,20 +232,18 @@ extension WeatherTableViewController {
                     if let image = UIImage(data: imageData!) {
                         dispatch_async(dispatch_get_main_queue(), { 
                             cell.imageView!.image = image
-                            let transition = CATransition()
-                            transition.duration = 0.5
-                            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                            transition.type = kCATransitionFade
-                            transition.delegate = self
-                            cell.imageView!.layer.addAnimation(transition, forKey: nil)
+                            cell.imageView!.layer.addAnimation(imageTransition(), forKey: nil)
                         })
-                    } else {
-                        print(error)
                     }
                 })
             }
-            cell.textLabel?.text = NSDate(timeIntervalSince1970: list.timeInterval!).toStringInHHMMDDslashMMslashYYYY()
-            cell.detailTextLabel?.text = list.information!
+            if let timeInterval = list.timeInterval {
+                cell.textLabel?.text = NSDate(timeIntervalSince1970: timeInterval).toStringInHHMMDDslashMMslashYYYY()
+            }
+            else {
+                cell.textLabel?.text = Translation.DataNotAvailable
+            }
+            cell.detailTextLabel?.text = list.information ?? Translation.DataNotAvailable
         }
         else {
             cell.textLabel?.text = Translation.DataNotAvailable
