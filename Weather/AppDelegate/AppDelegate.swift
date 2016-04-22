@@ -32,17 +32,21 @@ extension AppDelegate {
         }
     }
     func importCityJsonData() {
-        let jsonFilePath = JsonDefault.City
-        let jsonFileData = NSData(contentsOfFile: jsonFilePath!)
-        do {
-            let jsonFile = try NSJSONSerialization.JSONObjectWithData(jsonFileData!, options: .MutableContainers)
-            insertJsonProductData(jsonFile as? [String : AnyObject])
-        }
-        catch let error as NSError {
-            print("Erorr: \(error.localizedDescription)")
+        if let jsonFilePath = JsonDefault.City {
+            if let jsonFileData = NSData(contentsOfFile: jsonFilePath) {
+                do {
+                    let jsonFile = try NSJSONSerialization.JSONObjectWithData(jsonFileData, options: .MutableContainers)
+                    insertJsonProductData(jsonFile as? [String : AnyObject])
+                }
+                catch let error as NSError {
+                    print("Erorr: \(error.localizedDescription)")
+                }
+            }
         }
     }
     func insertJsonProductData(results: [String: AnyObject]?) {
-        City.insert(results!)
+        if let results = results {
+            City.insert(results)
+        }
     }
 }

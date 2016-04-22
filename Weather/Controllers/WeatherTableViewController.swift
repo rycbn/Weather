@@ -70,8 +70,8 @@ extension WeatherTableViewController {
                 for (index, city) in self.pickerData.enumerate() {
                     if city.name == self.cityNameSelected {
                         self.selectedIndex = index
-                        self.cityImageSelected = city.imageName!
-                        self.cityImageView.image = UIImage(named: city.imageName!)
+                        self.cityImageSelected = city.imageName ?? ImageName.Default
+                        self.cityImageView.image = UIImage(named: city.imageName ?? ImageName.Default)
                         break
                     }
                 }
@@ -229,11 +229,13 @@ extension WeatherTableViewController {
             let list = tableData[indexPath.row] as! List
             if let imageUrl = list.imageUrl {
                 TaskConfig().taskForGETImage(imageUrl, completionHandler: { (imageData, error) in
-                    if let image = UIImage(data: imageData!) {
-                        dispatch_async(dispatch_get_main_queue(), { 
-                            cell.imageView!.image = image
-                            cell.imageView!.layer.addAnimation(imageTransition(), forKey: nil)
-                        })
+                    if let imageData = imageData {
+                        if let image = UIImage(data: imageData) {
+                            dispatch_async(dispatch_get_main_queue(), {
+                                cell.imageView!.image = image
+                                cell.imageView!.layer.addAnimation(imageTransition(), forKey: nil)
+                            })
+                        }
                     }
                 })
             }

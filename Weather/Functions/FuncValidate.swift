@@ -18,13 +18,17 @@ func hasCellularCoverage() -> Bool {
 }
 
 func isNetworkOrCellularCoverageReachable() -> Bool  {
-    let reachability = Reachability.reachabilityForInternetConnection()
-    return (reachability!.isReachable() || hasCellularCoverage())
+    if let reachability = Reachability.reachabilityForInternetConnection() {
+        return (reachability.isReachable() || hasCellularCoverage())
+    }
+    return false
 }
 
 func isReachableViaWifi() -> Bool {
-    let reachability = Reachability.reachabilityForInternetConnection()
-    return reachability!.isReachableViaWiFi()
+    if let reachability = Reachability.reachabilityForInternetConnection() {
+        return reachability.isReachableViaWiFi()
+    }
+    return false
 }
 
 func getDefaultCity() -> (name: String?, id: Double?, found: Bool) {

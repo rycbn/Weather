@@ -8,9 +8,11 @@
 
 import UIKit
 
-func geography() -> UIImage {
-    let image = UIImage(named: "icon_geography")!.imageWithRenderingMode(.AlwaysTemplate)
-    return image
+func geography() -> UIImage? {
+    if let image = UIImage(named: "icon_geography")?.imageWithRenderingMode(.AlwaysTemplate) {
+        return image
+    }
+    return nil
 }
 func imageTransition() -> CATransition {
     let transition = CATransition()
